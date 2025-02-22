@@ -1,2 +1,2 @@
-# picklemap
+# picklebook
 A pickleball app.
