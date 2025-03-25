@@ -1,7 +1,24 @@
 @import "tailwindcss";
 
 :root {
-    --primary-color: green;
-    --secondary-color: #ffed4a;
+    --primary-color: #283618;
+    --secondary-color: #B7B7A4;
+    --accent-color: #D4D4D4;
+    --background-color: #F0EFEB;
     --font-family-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
+
+body {
+    background-color: var(--primary-color);
+}
+
+button {
+    cursor: pointer;
+}
+
+label {
+    font-weight: bold;
+    color: var(--secondary-color);
+    margin: 0.5rem 0;
+}
+

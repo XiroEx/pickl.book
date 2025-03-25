@@ -12,22 +12,23 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate', // Ensures updates happen automatically
       manifest: {
-        name: "PickleMaps",
-        short_name: "PickleMaps",
-        theme_color: "#ffffff",
-        background_color: "#ffffff",
+        name: "pickl.book",
+        short_name: "pickl.book",
+        theme_color: "#00ff00",
+        background_color: "#00ff00",
         display: "standalone", // Enables full-screen mode
+        orientation: "portrait",
         start_url: "/",
         icons: [
           {
-            src: "/pickleball.png",
+            src: "/pb.jpg",
             sizes: "192x192",
-            type: "image/png"
+            type: "image/jpg"
           },
           {
-            src: "/pickleball.png",
+            src: "/pb.jpg",
             sizes: "512x512",
-            type: "image/png"
+            type: "image/jpg"
           }
         ]
       },

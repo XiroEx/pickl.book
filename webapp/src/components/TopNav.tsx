@@ -1,7 +1,7 @@
 import React from 'react';
 import Sidebar from './Sidebar';
 
-const TopNav: React.FC = () => {
+const TopNav = ({isApp, user, auth}: any)=> {
 
     const [open, setOpen] = React.useState(false);
 
@@ -14,16 +14,16 @@ const TopNav: React.FC = () => {
 
     return (
         <div className="relative">
-            <nav className="bg-[var(--primary-color)] p-4 flex justify-between items-center h-14">
-                <div className="text-white text-lg font-bold">PickleMaps</div>
+            <nav className={`bg-[var(--primary-color)] p-4 ${isApp ? 'pt-2 h-12' : 'h-14'} flex justify-between items-center border-b border-gray-500`}>
+                <div className="text-white text-lg font-bold">pickl.book</div>
                 <div className="lg:hidden">
                     <button onClick={toggleMenu} className="text-white focus:outline-none">
                         {document.documentElement.style.getPropertyValue('--menu-open') === 'true' ? <XIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
                     </button>
                 </div>
             </nav>
-            {document.documentElement.style.getPropertyValue('--menu-open') === 'true' && <div className="fixed inset-0 bg-black opacity-50 lg:hidden" onClick={toggleMenu}></div>}
-            <Sidebar />
+            {document.documentElement.style.getPropertyValue('--menu-open') === 'true' && <div className="fixed inset-0 bg-black opacity-50 lg:hidden z-[49]" onClick={toggleMenu}></div>}
+            <Sidebar {...{user, auth}}/>
         </div>
     );
 };
