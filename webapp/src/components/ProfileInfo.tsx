@@ -6,6 +6,9 @@ import { useDocumentData } from "react-firebase-hooks/firestore"
 
 export default function ProfileInfo({user, auth, db} : any) {
 
+    async function logOut() {
+        await auth.signOut()
+    }
     async function updateUser() {
         const profileData: {displayName?: string, photoURL?: string} = {}
 
@@ -82,6 +85,9 @@ export default function ProfileInfo({user, auth, db} : any) {
 
             <button type="button" onClick={updateUser} className="bg-blue-500 text-white p-2 rounded m-4">
                 Update Profile
+            </button>
+            <button type="button" onClick={logOut} className="bg-blue-500 text-white p-2 rounded m-4">
+                Logout
             </button>
 
         </form>
