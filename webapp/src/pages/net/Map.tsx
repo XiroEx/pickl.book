@@ -5,6 +5,7 @@ import pulseIcon from '../../assets/pulse.gif';
 import * as map1 from "../../utils/samples/map1.json";
 import * as map2 from "../../utils/samples/map2.json";
 import * as map3 from "../../utils/samples/map3.json";
+import { useCheckins } from "../../hooks/useCheckins";
 /* import { useHeatmapData } from "./useHeatmapData"; */
 
 const mapContainerStyle = { width: "100%", height: "100%" };
@@ -18,6 +19,8 @@ export default function Map() {
     //const [radius, setRadius] = useState(10);
     const mapRef: any = useRef(null);
     const [heatmapData, setHeatmapData]: any = useState([]);
+    const [confirmCheckin, setConfirmCheckin] = useState(false);
+    //const { checkins } = useCheckins(defaultCenter.lat, defaultCenter.lng);
 
     /* const { heatmapData, loading, error } = useHeatmapData({ center, radius }); */
 
@@ -49,6 +52,10 @@ export default function Map() {
     useEffect(() => {
 
     }, [userLocation]);
+
+    //useEffect(() => {
+     //   console.log("Checkins updated:", checkins);
+    //}, [checkins]);
 
     useEffect(() => {
         if (navigator.permissions) {
@@ -83,6 +90,7 @@ export default function Map() {
     
     function getPoints(center: google.maps.LatLng) {
         const updatedHeatmapData = [...heatmapData];
+        console.log( "Adding point at: ", center.lat(), center.lng());
         const existingPoint = updatedHeatmapData.find(
             (point) => point.location.lat() === center.lat() && point.location.lng() === center.lng()
         );
@@ -123,13 +131,13 @@ export default function Map() {
                 
             >
                 {heatmapData.length > 0 && <HeatmapLayer options={{radius: 40}} data={heatmapData.map((point: any) => (
-                    { location: point.location, weight: (point.weight/5), }
+                    { location: point.location, weight: (point.weight/10), }
                 ))} />}
                 <button onClick={()=>handleMyLocation(center, mapRef.current, setUserLocation)} 
                 className="bg-[var(--primary-color)] absolute bottom-4 right-0 m-2 p-3 text-white rounded-full">
                     {locationIcon}
                 </button>
-                <button onClick={()=>checkIn()} 
+                <button onClick={()=>setConfirmCheckin(true)} 
                 className="bg-[var(--primary-color)] absolute bottom-4 left-0 m-2 p-3 text-white rounded-full">
                     {checkInIcon}
                 </button>
@@ -139,6 +147,19 @@ export default function Map() {
                     origin: new window.google.maps.Point(0, 0),
                     anchor: new window.google.maps.Point(16, 16),
                 }}/>}
+                { confirmCheckin && <>
+                    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 rounded shadow-lg z-50">
+                        <h3 className="text-lg font-bold mb-2">Confirm Check-in</h3>
+                        <p>Are you sure you want to check in at your current location?</p>
+                        <div className="mt-4 flex justify-end space-x-2">
+                            <button onClick={() => setConfirmCheckin(false)} className="bg-gray-300 text-black px-4 py-2 rounded">Cancel</button>
+                            <button onClick={() => {
+                                checkIn();
+                                setConfirmCheckin(false);
+                            }} className="bg-[var(--primary-color)] text-white px-4 py-2 rounded">Confirm</button>
+                        </div>
+                    </div>
+                </>}
             </GoogleMap>
         </LoadScript>
     </div>
